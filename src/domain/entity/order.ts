@@ -46,6 +46,7 @@ export default class Order {
 
     changeItems(newItems: OrderItem[]) {
         this._items = newItems;
+        this._total = this.total();
     }
 
     total(): number {
