@@ -1,3 +1,6 @@
+import CustomerChangeAddressEvent from '../event/customer/customer-change-address.event';
+import CustomerCreatedEvent from '../event/customer/customer-created.event';
+import { eventDispatcher } from '../event/customer/event-config';
 import Address from './address';
 
 
@@ -13,6 +16,10 @@ export default class Customer {
         this._id = id;
         this._name = name;
         this.validate();
+        this.apply(new CustomerCreatedEvent({
+            id: this._name,
+            name: this._name
+        }));
     }
 
     get name(): string {
@@ -47,6 +54,11 @@ export default class Customer {
 
     changeAddress(address: Address) {
         this._address = address;
+        this.apply(new CustomerChangeAddressEvent({
+            id: this._id,
+            name: this._name,
+            address: this._address
+        }));
     }
 
     activate() {
@@ -71,5 +83,10 @@ export default class Customer {
     setAddress(address: Address) {
         this._address = address;
     }
+
+    private apply(event: any) {
+        eventDispatcher.notify(event);
+    }
     
+
 }
