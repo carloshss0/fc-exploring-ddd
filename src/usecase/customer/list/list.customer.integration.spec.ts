@@ -5,7 +5,7 @@ import ListCustomerUseCase from "./list.customer.usecase";
 import Customer from "../../../domain/customer/entity/customer";
 import Address from "../../../domain/customer/value-object/address";
 
-describe("Test create customer use case", () => {
+describe("Test list customers use case", () => {
     
     let sequelize: Sequelize
 
@@ -25,7 +25,7 @@ describe("Test create customer use case", () => {
         await sequelize.close();
     });
 
-    it("should find a customer", async () => {
+    it("should list the customers", async () => {
     
         const customerRepository = new CustomerRepository();
         const usecase = new ListCustomerUseCase(customerRepository);
