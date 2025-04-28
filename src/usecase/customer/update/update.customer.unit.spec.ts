@@ -1,13 +1,10 @@
+import Customer from "../../../domain/customer/entity/customer";
 import CustomerFactory from "../../../domain/customer/factory/customer.factory";
 import Address from "../../../domain/customer/value-object/address";
 import { InputUpdateCustomerDto } from "./update.customer.dto";
 import UpdateCustomerUseCase from "./update.customer.usecase";
 
-const customer = CustomerFactory.createWithAddress(
-    "John",
-    new Address("Street", 123, 'zip', "mock city")
-);
-
+let customer: Customer;
 let input: InputUpdateCustomerDto;
 
 const MockRepository = () => {
@@ -23,6 +20,12 @@ const MockRepository = () => {
 describe("Unit test for update customer use case", () => {
     
     beforeEach(() => {
+
+        customer = CustomerFactory.createWithAddress(
+            "John",
+            new Address("Street", 123, 'zip', "mock city")
+        );
+
         input = {
             id: customer.id,
             name: "John Updated",
@@ -49,7 +52,7 @@ describe("Unit test for update customer use case", () => {
 
         input.name = "";
         await expect(customerUpdateUseCase.execute(input)).rejects.toThrow(
-            "Name is required"
+            "customer: Name is required"
         );
     });
 
