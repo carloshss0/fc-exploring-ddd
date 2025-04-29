@@ -17,6 +17,13 @@ describe("Product unit tests", () => {
         }).toThrowError("product: Name is required");
     });
 
+    it("should throw error when id and name is empty", () => {
+
+        expect(() => {
+            const product = new Product("", "", 100);
+        }).toThrowError("product: Id is required,product: Name is required");
+    });
+
     it("should throw error when price is lower than 0", () => {
 
         expect(() => {
