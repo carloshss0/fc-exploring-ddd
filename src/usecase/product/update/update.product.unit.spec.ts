@@ -3,15 +3,7 @@ import ProductFactory from "../../../domain/product/factory/product.factory";
 import UpdateProductUseCase from "./update.product.usecase";
 import { InputUpdateProductDto } from "./update.product.usecase.dto";
 
-const productData = ProductFactory.create(
-    "a",
-    "soda",
-    3.99,
-);
-
-const product = new Product(productData.id, productData.name, productData.price);
-
-
+let product: Product;
 let input: InputUpdateProductDto;
 
 const MockRepository = () => {
@@ -27,6 +19,14 @@ const MockRepository = () => {
 describe("Unit test for update product use case", () => {
     
     beforeEach(() => {
+        const productData = ProductFactory.create(
+            "a",
+            "soda",
+            3.99,
+        );
+
+        product = new Product(productData.id, productData.name, productData.price);
+
         input = {
             id: product.id,
             name: "new soda",
@@ -48,7 +48,7 @@ describe("Unit test for update product use case", () => {
 
         input.name = "";
         await expect(productUpdateUseCase.execute(input)).rejects.toThrow(
-            "name is required"
+            "product: Name is required"
         );
     });
 
@@ -59,7 +59,7 @@ describe("Unit test for update product use case", () => {
         input.price = -10;
 
         await expect(productUpdateUseCase.execute(input)).rejects.toThrow(
-            "price needs to be bigger than 0"
+            "product: Price must be bigger than 0"
         );
     });
 })
