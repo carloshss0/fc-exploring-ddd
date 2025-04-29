@@ -22,7 +22,7 @@ describe("Customer unit tests", () => {
         expect( () => {
             let customer = new Customer("", "");
 
-        }).toThrowError("customer: Name is required,customer: Id is required");
+        }).toThrowError("customer: Id is required,customer: Name is required");
     });
 
     it("should change name", () => {

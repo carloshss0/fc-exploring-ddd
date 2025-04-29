@@ -3,6 +3,7 @@ import NotificationError from '../../@shared/notification/notification.error';
 import CustomerChangeAddressEvent from '../event/customer-change-address.event';
 import CustomerCreatedEvent from '../event/customer-created.event';
 import { eventDispatcher } from '../event/event-config';
+import CustomerValidatorFactory from '../factory/customer.validator.factory';
 import Address from '../value-object/address';
 
 
@@ -42,18 +43,7 @@ export default class Customer extends Entity {
 
 
     validate() {
-        if(this._name.length === 0) {
-            this.notification.addError({
-                context: "customer",
-                message: "Name is required"
-            });  
-        }
-        if(this.id.length === 0) {
-            this.notification.addError({
-                context: "customer",
-                message: "Id is required"
-            });   
-        }
+        CustomerValidatorFactory.create().validate(this);
     }
 
     changeName(name: string) {
